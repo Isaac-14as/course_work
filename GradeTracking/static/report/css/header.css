@@ -1,0 +1,29 @@
+body {
+    background-color: rgb(235, 217, 251);
+}
+.header {
+    background-color: rgb(144, 16, 191);
+    width: 99.7%;
+    margin: 0 auto;
+    height: 80px;
+    position: sticky;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+}
+
+.logo {
+    font-size:40px;
+    color: aliceblue;
+    font-family: 'Stick No Bills', sans-serif;
+}
+.logo b { 
+    display: inline;
+    color: rgb(205, 255, 197);
+}
+
