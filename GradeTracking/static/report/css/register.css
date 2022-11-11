@@ -1,0 +1,19 @@
+.box_form { 
+    margin: 0 auto;
+    width: 50%;
+    border-top: 1px solid blueviolet;
+    border-bottom: 1px solid blueviolet;
+    margin-top: 50px;
+    padding-bottom: 20px;
+}
+
+.btn {
+    margin: 0 auto;
+}
+
+.btn_box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

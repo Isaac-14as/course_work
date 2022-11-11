@@ -19,11 +19,54 @@ body {
 
 .logo {
     font-size:40px;
-    color: aliceblue;
-    font-family: 'Stick No Bills', sans-serif;
+    color: rgb(255, 255, 255);
+    /* font-family: 'Stick No Bills', sans-serif; */
 }
 .logo b { 
     display: inline;
-    color: rgb(205, 255, 197);
+    color: rgb(164, 255, 150);
+}
+.logo div {
+    color: rgb(255, 255, 255);
 }
 
+
+.header_right {
+    display: flex;
+}
+
+.user_text{
+    color: azure;
+    font-size: 20px;
+    padding-right: 10px;
+}
+.user_text a {
+    color: rgb(164, 255, 150);
+}
+.exitU {
+    color: azure;
+    font-size: 20px;
+    border-left: 2px solid rgb(255, 255, 255);
+    padding-left: 10px;
+}
+
+.exitU a {
+    color: azure;
+}
+
+.entry {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.entry img {
+    width: 50px;
+}
+
+.entry div {
+    color: azure;
+    text-decoration: azure;
+}

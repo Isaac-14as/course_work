@@ -1,0 +1,15 @@
+.user_box {
+    font-size: 30px;
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 100px;
+    border-top: 1px solid blueviolet;
+    border-bottom: 1px solid blueviolet;
+    margin-top: 50px;
+    padding-bottom: 20px;
+}
+.box_title {
+    font-size: 40px;
+    width: 100%;
+    text-align: center;
+}

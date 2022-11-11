@@ -1,13 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 
-# from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, UserLoginForm
+from django.contrib.auth import login, logout, authenticate
 
 # from .models import News, Category
 # from .forms import NewsForm
-
 
 
 def index(request):
@@ -19,9 +19,10 @@ def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             messages.success(request, 'Вы успешно зарегистрировались')
-            return redirect("login")
+            return redirect("index")
         else:
             messages.error(request, 'Ошибка регистрации')
     else:
@@ -31,9 +32,31 @@ def register(request):
     }
     return render(request, template, context)
 
-def login(request):
+def user_login(request):
     template = "report/login.html"
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('index')
+    else:
+        form = UserLoginForm()
+    context = {
+        'form': form,
+    }
+    return render(request, template, context)
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+
+
+def account(request):
+    template = "report/account.html"
     return render(request, template)
+
 
 
 # def get_category(request, category_id):

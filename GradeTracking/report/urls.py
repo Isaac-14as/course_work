@@ -4,9 +4,11 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path('', index, name='main_page'),
+    path('', index, name='index'),
     path('register/', register, name='register'),
-    path('login/', login, name='login'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
+    path('account/', account, name='account'),
 
     # path('', HomeNews.as_view(), name='home'),
     # path('category/<int:category_id>/', get_category, name='category'),
