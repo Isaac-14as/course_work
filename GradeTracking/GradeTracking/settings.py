@@ -120,3 +120,5 @@ USE_TZ = True
 # AUTH_USER_MODEL = 'students.Student'
 
 AUTH_USER_MODEL = 'report.User'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

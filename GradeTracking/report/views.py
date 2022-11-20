@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth import login, logout, authenticate
+from .models import Course, User
 
 # from .models import News, Category
 # from .forms import NewsForm
@@ -57,6 +58,27 @@ def account(request):
     template = "report/account.html"
     return render(request, template)
 
+
+def user_courses(request):
+    template = "report/user_courses.html"
+    # user = (request.user).courses
+    # courses = Course.objects.all()
+    # courses = (request.user).courses
+    # courses = Course.objects.filter(user_id)
+    # context = {
+    #     'courses': courses,
+    # }
+
+    return render(request, template)
+
+
+def user_course_table(request):
+    template = "report/user_course_table.html"
+    users_group = User.objects.filter(group=request.user.group).order_by('last_name')
+    context = {
+        'users_group': users_group,
+    }
+    return render(request, template, context)
 
 
 # def get_category(request, category_id):

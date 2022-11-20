@@ -9,6 +9,8 @@ urlpatterns = [
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
     path('account/', account, name='account'),
+    path('you_courses/', user_courses, name='user_courses'),
+    path('user_course_table/', user_course_table, name='user_course_table'),
 
     # path('', HomeNews.as_view(), name='home'),
     # path('category/<int:category_id>/', get_category, name='category'),

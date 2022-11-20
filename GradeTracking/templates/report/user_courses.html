@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/user_courses.css' %}">  
+{% endblock %}
+
+
+{% block index_content %}
+  <div class="courses_box">
+    {% for item in user.courses.all %}
+      <div class="course_item">
+        {{ item }}
+      </div>
+    {% endfor %}
+  </div>
+
+{% endblock %}

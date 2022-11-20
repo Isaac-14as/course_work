@@ -1,13 +1,13 @@
 {% load static %} 
 <div class="header">
-  <a class="logo"><div>Grade<b>Tracking</b></div></a>
+  <a class="logo" href="{% url 'index' %}"><div>Grade<b>Tracking</b></div></a>
   <div class="header_right">
       {% if request.user.is_authenticated %}
           <div class='user_text'>Добро пожаловать, <a href="{% url 'account' %}">{{ user.first_name }}</a></div>
           <div class="exitU"><a href="{% url 'logout' %}">Выйти</a></div>
       {% else %}
         <div class="entry">
-          <a href="{% url 'register' %}" class="entry">
+          <a href="{% url 'login' %}" class="entry">
             <img src={% static 'report/img/entry.png' %} alt="">
             <div>Вход/Регистрация</div>
           </a>

@@ -1,0 +1,65 @@
+tr, td {
+    padding: 3px;
+    border: 2px solid black;
+    text-align: center;
+    font-size: 19px;
+    background-color: aliceblue;
+}
+.name_user {
+    text-align: left; 
+    /* background-color: aquamarine; */
+    background-color: beige;
+}
+table {
+    margin: 0 auto;
+    min-width: 90%;
+    margin-top: 30px;
+}
+
+.course_group {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.name_user {
+    text-align: left; 
+    /* background-color: aquamarine; */
+    background-color: beige;
+}
+
+.self_user_field {
+    border: 2px solid rgb(184, 20, 20);
+}
+.self_user_field_1 {
+    background-color: aquamarine;
+    border: 2px solid rgb(184, 20, 20);
+}
+.field_1 {
+    background-color: aquamarine;
+}
+.field_2 {
+    background-color: rgb(168, 255, 180);
+}
+
+.field_3 {
+    background-color: rgb(63, 214, 240);
+}
+.field_4 { 
+    background-color: rgb(199, 134, 252); 
+}
+.field_5 {
+    background-color: rgb(152, 240, 255);
+}
+.field_6 {
+    background-color: rgb(225, 187, 255); 
+}
+.field_7 {
+    background-color: rgb(152, 240, 255);
+}
+.field_8 {
+    background-color: rgb(225, 187, 255);
+}
+.nmb_1 {
+    background-color: rgb(239, 242, 85);
+}
