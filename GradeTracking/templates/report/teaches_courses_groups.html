@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/user_courses.css' %}">  
+{% endblock %}
+
+
+{% block index_content %}
+  <div class="course_title">
+    <h1>{{ course.name }}</h1>
+  </div>
+  <div class="courses_box">
+    {% for item_group in groups %}
+      {% if course in item_group.courses.all %}
+        <a class="course_item" href="{% url 'teaches_course_table' course_id item_group.id %}">
+          {{ item_group }}
+        </a>
+      {% endif %} 
+    {% endfor %}
+  </div>
+
+
+{% endblock %}

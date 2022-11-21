@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth import login, logout, authenticate
-from .models import Course, User
+from .models import Course, User, Grades, Group
 
 # from .models import News, Category
 # from .forms import NewsForm
@@ -71,14 +71,69 @@ def user_courses(request):
 
     return render(request, template)
 
+# def user_course_table(request, course_id):
+#     template = "report/user_course_table.html"
+#     grades = Grades.objects.filter(course=course_id)
+#     course1 = Course.objects.get(id=course_id)
+#     groups = Group.objects.all()
+#     users = User.objects.filter(group=request.user.group).order_by('last_name')
+#     context = {
+#         'course_id': course_id,
+#         'users': users,
+#         'groups': groups,
+#         'grades' : grades,
+#         'course1': course1,
+#     }
+#     return render(request, template, context)
 
-def user_course_table(request):
+def user_course_table(request, course_id):
     template = "report/user_course_table.html"
-    users_group = User.objects.filter(group=request.user.group).order_by('last_name')
+    grades = Grades.objects.filter(course=course_id).order_by('user__last_name')
+    course = Course.objects.get(id=course_id)
     context = {
-        'users_group': users_group,
+        'grades' : grades,
+        'course': course,
     }
     return render(request, template, context)
+
+
+def teacher_courses(request):
+    template = "report/teacher_courses.html"
+    return render(request, template)
+
+
+def teaches_courses_groups(request, course_id):
+    template = "report/teaches_courses_groups.html"
+    groups = Group.objects.all()
+    course = Course.objects.get(id=course_id)
+    context = {
+        'course': course,
+        'groups': groups,
+        'course_id': course_id,
+    }
+    return render(request, template, context)
+
+def teaches_course_table(request, course_id, group_id):
+    template = "report/teaches_course_table.html"
+    course = Course.objects.get(id=course_id)
+    group = Group.objects.get(id=group_id)
+    context = {
+        'course': course,
+        'group': group,
+    }
+    return render(request, template, context)
+
+# def user_course_table(request, course_id):
+#     template = "report/user_course_table.html"
+#     course = Course.objects.get(id=course_id)
+#     users_group = User.objects.filter(group=request.user.group).order_by('last_name')
+#     # grades_user = Grades.objects.filter()
+#     context = {
+#         'users_group': users_group,
+#         'course': course,
+#         'course_id': course_id,
+#     }
+#     return render(request, template, context)
 
 
 # def get_category(request, category_id):

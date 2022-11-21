@@ -1,12 +1,16 @@
 body {
     background-color: rgb(235, 217, 251);
 }
-.header {
+
+.header_main {
+    position: sticky;
+    top: 0;
+}
+.top_header {
     background-color: rgb(144, 16, 191);
     width: 99.7%;
     margin: 0 auto;
     height: 80px;
-    position: sticky;
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     display: flex;
@@ -16,7 +20,9 @@ body {
     border-left: 3px solid black;
     border-right: 3px solid black;
 }
-
+.logo_1 a {
+    text-decoration: none;
+}
 .logo {
     font-size:40px;
     color: rgb(255, 255, 255);
@@ -74,5 +80,27 @@ body {
 
 
 .header a {
+    text-decoration: none;
+}
+
+.bottom_header {
+    background-color: rgb(207, 137, 232);
+    width: 95%;
+    margin: 0 auto;
+    height: 50px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: 3px solid black;
+    border-left: 3px solid black;
+    border-right: 3px solid black;
+    justify-content: space-around;
+
+}
+.bottom_header a {
+    font-size: 23px;
+    color: rgb(87, 255, 61);
     text-decoration: none;
 }

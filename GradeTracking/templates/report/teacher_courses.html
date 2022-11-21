@@ -7,9 +7,12 @@
 
 
 {% block index_content %}
+  <div class="course_title">
+    <h1>Преподаваемые курсы</h1>
+  </div>
   <div class="courses_box">
-    {% for item in user.group.courses.all %}
-      <a class="course_item" href="{% url 'user_course_table' item.id  %}">
+    {% for item in user.teaches_courses.all %}
+      <a class="course_item" href="{% url 'teaches_courses_groups' item.id %}">
         {{ item }}
       </a>
     {% endfor %}

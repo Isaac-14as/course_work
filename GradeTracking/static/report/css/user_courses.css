@@ -2,7 +2,7 @@
     width: 70%;
     display: flex;
     margin: 0 auto;
-    margin-top: 100px;
+    margin-top: 40px;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
@@ -21,3 +21,15 @@
     font-size: 30px;
     margin-top: 40px;
 }
+
+.courses_box a {
+    text-decoration: none;
+    color: black;
+}
+.course_title {
+    padding-top: 20px;
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+}
+
