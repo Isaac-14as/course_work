@@ -15,22 +15,22 @@
   <table>
     <tr>
       <td rowspan="2" colspan="3" class="field_1">Студент</td>
-      <td colspan="2" class="field_2">Знатие 1</td>
-      <td colspan="2" class="field_2">Знатие 2</td>
-      <td colspan="2" class="field_2">Знатие 3</td>
-      <td colspan="2" class="field_2">Знатие 4</td>
-      <td colspan="2" class="field_2">Знатие 5</td>
-      <td colspan="2" class="field_2">Знатие 6</td>
-      <td colspan="2" class="field_2">Знатие 7</td>
-      <td colspan="2" class="field_2">Знатие 8</td>
-      <td colspan="2" class="field_2">Знатие 9</td>
-      <td colspan="2" class="field_2">Знатие 10</td>
-      <td colspan="2" class="field_2">Знатие 11</td>
-      <td colspan="2" class="field_2">Знатие 12</td>
-      <td colspan="2" class="field_2">Знатие 13</td>
-      <td colspan="2" class="field_2">Знатие 14</td>
-      <td colspan="2" class="field_2">Знатие 15</td>
-      <td colspan="2" class="field_2">Знатие 16</td>
+      <td colspan="2" class="field_2">Занятие 1</td>
+      <td colspan="2" class="field_2">Занятие 2</td>
+      <td colspan="2" class="field_2">Занятие 3</td>
+      <td colspan="2" class="field_2">Занятие 4</td>
+      <td colspan="2" class="field_2">Занятие 5</td>
+      <td colspan="2" class="field_2">Занятие 6</td>
+      <td colspan="2" class="field_2">Занятие 7</td>
+      <td colspan="2" class="field_2">Занятие 8</td>
+      <td colspan="2" class="field_2">Занятие 9</td>
+      <td colspan="2" class="field_2">Занятие 10</td>
+      <td colspan="2" class="field_2">Занятие 11</td>
+      <td colspan="2" class="field_2">Занятие 12</td>
+      <td colspan="2" class="field_2">Занятие 13</td>
+      <td colspan="2" class="field_2">Занятие 14</td>
+      <td colspan="2" class="field_2">Занятие 15</td>
+      <td colspan="2" class="field_2">Занятие 16</td>
     </tr>
     <tr>
       <td class="field_3">Явка</td>
@@ -67,8 +67,9 @@
       <td class="field_4">Балл</td>
     </tr>
     {% for item in grades %}
+      {% if item.user.group == user.group %}
         {% if item.user == user %}
-          <tr class ="self_user_field">
+          <tr class ="self_user_field line_student">
             <td class="self_user_field nmb_1">{{ forloop.counter }}</td>
             <td class="name_user self_user_field_1" colspan="2" >{{ item.user.last_name }} {{ item.user.first_name }}</td>
               <td class="self_user_field field_5">{{ item.visit_1 }}</td>
@@ -105,7 +106,7 @@
               <td class="self_user_field field_6">{{ item.grade_16 }}</td>
           </tr>
         {% else %}
-          <tr>
+          <tr class ="line_student">
             <td class="nmb_1">{{ forloop.counter }}</td>
             <td class="name_user" colspan="2">{{ item.user.last_name }} {{ item.user.first_name }}</td>
             <td class="field_5">{{ item.visit_1 }}</td>
@@ -142,6 +143,7 @@
             <td class="field_6">{{ item.grade_16 }}</td>
           </tr>
         {% endif %}
+      {% endif %}
     {% endfor %}
   </table>
 {% endblock %} 

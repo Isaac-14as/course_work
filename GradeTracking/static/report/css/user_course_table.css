@@ -5,6 +5,13 @@ tr, td {
     font-size: 19px;
     background-color: aliceblue;
 }
+.line_student {
+    height: 65px;
+}
+.field_5, .field_6 {
+    width: 100px;
+}
+
 .name_user {
     text-align: left; 
     /* background-color: aquamarine; */
@@ -63,4 +70,24 @@ table {
 }
 .nmb_1 {
     background-color: rgb(255, 252, 60);
+}
+
+/* .field_6 {
+    max-width: 1000px;
+} */
+
+.empty_field { 
+    background-color: rgb(235, 217, 251);
+    border-top: 2px solid rgb(235, 217, 251);
+    border-left: 2px solid rgb(235, 217, 251);
+}
+
+.name_user a {
+    color: black;
+}
+
+.link_back {
+    width: 600px;
+    margin: 0 auto;
+    text-align: center;
 }

@@ -11,7 +11,9 @@
     <h1>{{ course.name }}</h1>
     <h3>{{ group.name }}</h3>
   </div>
-
+  <div class="link_back">
+    <a href="{% url 'teaches_courses_groups' course_id %}">Вернуться к группам с этим курса</a>
+  </div>
   <table>
     <tr>
       <td rowspan="2" colspan="3" class="field_1">Студент</td>
@@ -67,81 +69,369 @@
       <td class="field_4">Балл</td>
     </tr>
     {% for item in grades %}
-        {% if item.user == user %}
-          <tr class ="self_user_field">
-            <td class="self_user_field nmb_1">{{ forloop.counter }}</td>
-            <td class="name_user self_user_field_1" colspan="2" >{{ item.user.last_name }} {{ item.user.first_name }}</td>
-              <td class="self_user_field field_5">{{ item.visit_1 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_1 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_2 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_2 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_3 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_3 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_4 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_4 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_5 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_5 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_6 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_6 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_7 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_7 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_8 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_8 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_9 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_9 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_10 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_10 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_11 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_11 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_12 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_12 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_13 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_13 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_14 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_14 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_15 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_15 }}</td>
-              <td class="self_user_field field_5">{{ item.visit_16 }}</td>
-              <td class="self_user_field field_6">{{ item.grade_16 }}</td>
-          </tr>
-        {% else %}
-          <tr>
-            <td class="nmb_1">{{ forloop.counter }}</td>
-            <td class="name_user" colspan="2">{{ item.user.last_name }} {{ item.user.first_name }}</td>
-            <td class="field_5">{{ item.visit_1 }}</td>
-            <td class="field_6">{{ item.grade_1 }}</td>
-            <td class="field_5">{{ item.visit_2 }}</td>
-            <td class="field_6">{{ item.grade_2 }}</td>
-            <td class="field_5">{{ item.visit_3 }}</td>
-            <td class="field_6">{{ item.grade_3 }}</td>
-            <td class="field_5">{{ item.visit_4 }}</td>
-            <td class="field_6">{{ item.grade_4 }}</td>
-            <td class="field_5">{{ item.visit_5 }}</td>
-            <td class="field_6">{{ item.grade_5 }}</td>
-            <td class="field_5">{{ item.visit_6 }}</td>
-            <td class="field_6">{{ item.grade_6 }}</td>
-            <td class="field_5">{{ item.visit_7 }}</td>
-            <td class="field_6">{{ item.grade_7 }}</td>
-            <td class="field_5">{{ item.visit_8 }}</td>
-            <td class="field_6">{{ item.grade_8 }}</td>
-            <td class="field_5">{{ item.visit_9 }}</td>
-            <td class="field_6">{{ item.grade_9 }}</td>
-            <td class="field_5">{{ item.visit_10 }}</td>
-            <td class="field_6">{{ item.grade_10 }}</td>
-            <td class="field_5">{{ item.visit_11 }}</td>
-            <td class="field_6">{{ item.grade_11 }}</td>
-            <td class="field_5">{{ item.visit_12 }}</td>
-            <td class="field_6">{{ item.grade_12 }}</td>
-            <td class="field_5">{{ item.visit_13 }}</td>
-            <td class="field_6">{{ item.grade_13 }}</td>
-            <td class="field_5">{{ item.visit_14 }}</td>
-            <td class="field_6">{{ item.grade_14 }}</td>
-            <td class="field_5">{{ item.visit_15 }}</td>
-            <td class="field_6">{{ item.grade_15 }}</td>
-            <td class="field_5">{{ item.visit_16 }}</td>
-            <td class="field_6">{{ item.grade_16 }}</td>
-          </tr>
-        {% endif %}
+      {% if item.user.group == group %}
+        <tr class="line_student">
+          <td class="nmb_1"><a href="{% url 'teacher_editing' course_id group_id item.user.id %}">{{ forloop.counter }}</a></td>
+          <td class="name_user" colspan="2">
+            <a href="{% url 'teacher_editing' course_id group_id item.user.id %}">
+              {{ item.user.last_name }} {{ item.user.first_name }}
+            </a>
+          </td>
+          <td class="field_5">{{ item.visit_1 }}</td>
+          <td class="field_6">{{ item.grade_1 }}</td>
+          <td class="field_5">{{ item.visit_2 }}</td>
+          <td class="field_6">{{ item.grade_2 }}</td>
+          <td class="field_5">{{ item.visit_3 }}</td>
+          <td class="field_6">{{ item.grade_3 }}</td>
+          <td class="field_5">{{ item.visit_4 }}</td>
+          <td class="field_6">{{ item.grade_4 }}</td>
+          <td class="field_5">{{ item.visit_5 }}</td>
+          <td class="field_6">{{ item.grade_5 }}</td>
+          <td class="field_5">{{ item.visit_6 }}</td>
+          <td class="field_6">{{ item.grade_6 }}</td>
+          <td class="field_5">{{ item.visit_7 }}</td>
+          <td class="field_6">{{ item.grade_7 }}</td>
+          <td class="field_5">{{ item.visit_8 }}</td>
+          <td class="field_6">{{ item.grade_8 }}</td>
+          <td class="field_5">{{ item.visit_9 }}</td>
+          <td class="field_6">{{ item.grade_9 }}</td>
+          <td class="field_5">{{ item.visit_10 }}</td>
+          <td class="field_6">{{ item.grade_10 }}</td>
+          <td class="field_5">{{ item.visit_11 }}</td>
+          <td class="field_6">{{ item.grade_11 }}</td>
+          <td class="field_5">{{ item.visit_12 }}</td>
+          <td class="field_6">{{ item.grade_12 }}</td>
+          <td class="field_5">{{ item.visit_13 }}</td>
+          <td class="field_6">{{ item.grade_13 }}</td>
+          <td class="field_5">{{ item.visit_14 }}</td>
+          <td class="field_6">{{ item.grade_14 }}</td>
+          <td class="field_5">{{ item.visit_15 }}</td>
+          <td class="field_6">{{ item.grade_15 }}</td>
+          <td class="field_5">{{ item.visit_16 }}</td>
+          <td class="field_6">{{ item.grade_16 }}</td>
+        </tr>
+      {% endif %}
     {% endfor %}
   </table>
+
+
 {% endblock %} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/user_course_table.css' %}">  
+{% endblock %}
+
+
+{% block index_content %}
+  <div class="course_group">
+    <h1>{{ course.name }}</h1>
+    <h3>{{ group.name }}</h3>
+  </div>
+  <div class="link_back">
+    <a href="{% url 'teaches_courses_groups' course_id %}">Вернуться к группам с этим курса</a>
+  </div>
+  <table>
+    <tr>
+      <td rowspan="2" colspan="3" class="field_1">Студент</td>
+      <td colspan="2" class="field_2">Занятие 1</td>
+      <td colspan="2" class="field_2">Занятие 2</td>
+      <td colspan="2" class="field_2">Занятие 3</td>
+      <td colspan="2" class="field_2">Занятие 4</td>
+      <td colspan="2" class="field_2">Занятие 5</td>
+      <td colspan="2" class="field_2">Занятие 6</td>
+      <td colspan="2" class="field_2">Занятие 7</td>
+      <td colspan="2" class="field_2">Занятие 8</td>
+      <td colspan="2" class="field_2">Занятие 9</td>
+      <td colspan="2" class="field_2">Занятие 10</td>
+      <td colspan="2" class="field_2">Занятие 11</td>
+      <td colspan="2" class="field_2">Занятие 12</td>
+      <td colspan="2" class="field_2">Занятие 13</td>
+      <td colspan="2" class="field_2">Занятие 14</td>
+      <td colspan="2" class="field_2">Занятие 15</td>
+      <td colspan="2" class="field_2">Занятие 16</td>
+    </tr>
+    <tr>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+    </tr>
+    {% for item in users %}
+      {% if item.group == group %}
+        <tr>
+          <td class="nmb_1">{{ forloop.counter }}</td>
+          <td class="name_user" colspan="2">{{ item.last_name }} {{ item.first_name }}</td>
+          <td class="field_5">{{ form.visit_1 }}</td>
+          <td class="field_6">{{ form.grade_1 }}</td>
+          <td class="field_5">{{ form.visit_2 }}</td>
+          <td class="field_6">{{ form.grade_2 }}</td>
+          <td class="field_5">{{ form.visit_3 }}</td>
+          <td class="field_6">{{ form.grade_3 }}</td>
+          <td class="field_5">{{ form.visit_4 }}</td>
+          <td class="field_6">{{ form.grade_4 }}</td>
+          <td class="field_5">{{ form.visit_5 }}</td>
+          <td class="field_6">{{ form.grade_5 }}</td>
+          <td class="field_5">{{ form.visit_6 }}</td>
+          <td class="field_6">{{ form.grade_6 }}</td>
+          <td class="field_5">{{ form.visit_7 }}</td>
+          <td class="field_6">{{ form.grade_7 }}</td>
+          <td class="field_5">{{ form.visit_8 }}</td>
+          <td class="field_6">{{ form.grade_8 }}</td>
+          <td class="field_5">{{ form.visit_9 }}</td>
+          <td class="field_6">{{ form.grade_9 }}</td>
+          <td class="field_5">{{ form.visit_10 }}</td>
+          <td class="field_6">{{ form.grade_10 }}</td>
+          <td class="field_5">{{ form.visit_11 }}</td>
+          <td class="field_6">{{ form.grade_11 }}</td>
+          <td class="field_5">{{ form.visit_12 }}</td>
+          <td class="field_6">{{ form.grade_12 }}</td>
+          <td class="field_5">{{ form.visit_13 }}</td>
+          <td class="field_6">{{ form.grade_13 }}</td>
+          <td class="field_5">{{ form.visit_14 }}</td>
+          <td class="field_6">{{ form.grade_14 }}</td>
+          <td class="field_5">{{ form.visit_15 }}</td>
+          <td class="field_6">{{ form.grade_15 }}</td>
+          <td class="field_5">{{ form.visit_16 }}</td>
+          <td class="field_6">{{ form.grade_16 }}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </table> {% endcomment %}
+
+ {% comment %} <form action="" method="post" class="add_grades">
+    {% csrf_token %} {% endcomment %}
+    {% comment %} {{ form.as_p }} {% endcomment %}
+  
+    {% comment %} <div class="form_grades">
+      <label for="{{ form.visit_1.id_for_label }}">tt: </label>
+      {{ form.visit_1 }}
+      <div class="invalid_feedback">
+        {{ form.visit_1.errors }}
+      </div>
+    </div>
+
+    <div class="form_grades">
+      <label for="{{ form.visit_1.id_for_label }}">tt: </label>
+      {{ form.visit_2 }}
+      <div class="invalid_feedback">
+        {{ form.visit_2.errors }}
+      </div>
+    </div>
+
+  </form> {% endcomment %} 
+
+
+{% comment %} {% endblock %}  {% endcomment %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} {% extends 'base.html' %}
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/user_course_table.css' %}">  
+{% endblock %}
+
+
+{% block index_content %}
+  <div class="course_group">
+    <h1>{{ course.name }}</h1>
+    <h3>{{ group.name }}</h3>
+  </div>
+  <div class="link_back">
+    <a href="{% url 'teaches_courses_groups' course_id %}">Вернуться к группам с этим курса</a>
+  </div>
+  <table>
+    <tr>
+      <td rowspan="2" colspan="3" class="field_1">Студент</td>
+      <td colspan="2" class="field_2">Знатие 1</td>
+      <td colspan="2" class="field_2">Знатие 2</td>
+      <td colspan="2" class="field_2">Знатие 3</td>
+      <td colspan="2" class="field_2">Знатие 4</td>
+      <td colspan="2" class="field_2">Знатие 5</td>
+      <td colspan="2" class="field_2">Знатие 6</td>
+      <td colspan="2" class="field_2">Знатие 7</td>
+      <td colspan="2" class="field_2">Знатие 8</td>
+      <td colspan="2" class="field_2">Знатие 9</td>
+      <td colspan="2" class="field_2">Знатие 10</td>
+      <td colspan="2" class="field_2">Знатие 11</td>
+      <td colspan="2" class="field_2">Знатие 12</td>
+      <td colspan="2" class="field_2">Знатие 13</td>
+      <td colspan="2" class="field_2">Знатие 14</td>
+      <td colspan="2" class="field_2">Знатие 15</td>
+      <td colspan="2" class="field_2">Знатие 16</td>
+    </tr>
+    <tr>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+      <td class="field_3">Явка</td>
+      <td class="field_4">Балл</td>
+    </tr>
+    {% for item in grades %}
+      {% if item.user.group == group %}
+        <tr>
+          <td class="nmb_1">{{ forloop.counter }}</td>
+          <td class="name_user" colspan="2">{{ item.user.last_name }} {{ item.user.first_name }}</td>
+          <td class="field_5">{{ item.visit_1 }}</td>
+          <td class="field_6">{{ item.grade_1 }}</td>
+          <td class="field_5">{{ item.visit_2 }}</td>
+          <td class="field_6">{{ item.grade_2 }}</td>
+          <td class="field_5">{{ item.visit_3 }}</td>
+          <td class="field_6">{{ item.grade_3 }}</td>
+          <td class="field_5">{{ item.visit_4 }}</td>
+          <td class="field_6">{{ item.grade_4 }}</td>
+          <td class="field_5">{{ item.visit_5 }}</td>
+          <td class="field_6">{{ item.grade_5 }}</td>
+          <td class="field_5">{{ item.visit_6 }}</td>
+          <td class="field_6">{{ item.grade_6 }}</td>
+          <td class="field_5">{{ item.visit_7 }}</td>
+          <td class="field_6">{{ item.grade_7 }}</td>
+          <td class="field_5">{{ item.visit_8 }}</td>
+          <td class="field_6">{{ item.grade_8 }}</td>
+          <td class="field_5">{{ item.visit_9 }}</td>
+          <td class="field_6">{{ item.grade_9 }}</td>
+          <td class="field_5">{{ item.visit_10 }}</td>
+          <td class="field_6">{{ item.grade_10 }}</td>
+          <td class="field_5">{{ item.visit_11 }}</td>
+          <td class="field_6">{{ item.grade_11 }}</td>
+          <td class="field_5">{{ item.visit_12 }}</td>
+          <td class="field_6">{{ item.grade_12 }}</td>
+          <td class="field_5">{{ item.visit_13 }}</td>
+          <td class="field_6">{{ item.grade_13 }}</td>
+          <td class="field_5">{{ item.visit_14 }}</td>
+          <td class="field_6">{{ item.grade_14 }}</td>
+          <td class="field_5">{{ item.visit_15 }}</td>
+          <td class="field_6">{{ item.grade_15 }}</td>
+          <td class="field_5">{{ item.visit_16 }}</td>
+          <td class="field_6">{{ item.grade_16 }}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </table>
+
+
+{% endblock %}  {% endcomment %}

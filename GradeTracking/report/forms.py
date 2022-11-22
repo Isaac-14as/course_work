@@ -1,7 +1,7 @@
 from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User, Group
+from .models import User, Group, Grades
 
 
 class UserRegisterForm(UserCreationForm):
@@ -28,3 +28,57 @@ class UserRegisterForm(UserCreationForm):
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+
+
+class GradesForm(forms.ModelForm):
+
+    class Meta:
+        model = Grades
+        fields = []
+        widgets = {}
+        GRADE_LIST = (
+            (2, 2),
+            (3, 3),
+            (4, 4),
+            (5, 5),
+        )
+        for i in range(1, 17):
+            fields.append('visit_' + str(i))
+            fields.append('grade_' + str(i))
+            # widgets['visit_' + str(i)] = forms.BooleanField()
+            widgets['grade_' + str(i)] = forms.Select(attrs={'class': 'form-control'})
+
+        visit_1 = forms.BooleanField()
+        visit_2 = forms.BooleanField()
+        visit_3 = forms.BooleanField()
+        visit_4 = forms.BooleanField()
+        visit_5 = forms.BooleanField()
+        visit_6 = forms.BooleanField()
+        visit_7 = forms.BooleanField()
+        visit_8 = forms.BooleanField()
+        visit_9 = forms.BooleanField()
+        visit_10 = forms.BooleanField()
+        visit_11 = forms.BooleanField()
+        visit_12 = forms.BooleanField()
+        visit_13 = forms.BooleanField()
+        visit_14 = forms.BooleanField()
+        visit_15 = forms.BooleanField()
+        visit_16 = forms.BooleanField()
+
+        grade_1 = forms.IntegerField()
+        grade_2 = forms.IntegerField()
+        grade_3 = forms.IntegerField()
+        grade_4 = forms.IntegerField()
+        grade_5 = forms.IntegerField()
+        grade_6 = forms.IntegerField()
+        grade_7 = forms.IntegerField()
+        grade_8 = forms.IntegerField()
+        grade_9 = forms.IntegerField()
+        grade_10 = forms.IntegerField()
+        grade_11 = forms.IntegerField()
+        grade_12 = forms.IntegerField()
+        grade_13 = forms.IntegerField()
+        grade_14 = forms.IntegerField()
+        grade_15 = forms.IntegerField()
+        grade_16 = forms.IntegerField()

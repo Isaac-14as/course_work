@@ -14,6 +14,8 @@ urlpatterns = [
     path('teacher_courses/', teacher_courses, name='teacher_courses'),
     path('teaches_courses_groups/<int:course_id>/', teaches_courses_groups, name='teaches_courses_groups'),
     path('teaches_course_table/<int:course_id>/<int:group_id>/', teaches_course_table, name='teaches_course_table'),
+    path('teacher_editing/<int:course_id>/<int:group_id>/<int:user_id>/', teacher_editing, name='teacher_editing'),
+    
     # path('', HomeNews.as_view(), name='home'),
     # path('category/<int:category_id>/', get_category, name='category'),
     # path('news/<int:news_id>/', view_news, name='view_news'),

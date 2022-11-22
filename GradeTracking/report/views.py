@@ -6,6 +6,7 @@ from django.contrib import messages
 from .forms import UserRegisterForm, UserLoginForm
 from django.contrib.auth import login, logout, authenticate
 from .models import Course, User, Grades, Group
+from .forms import GradesForm
 
 # from .models import News, Category
 # from .forms import NewsForm
@@ -117,11 +118,46 @@ def teaches_course_table(request, course_id, group_id):
     template = "report/teaches_course_table.html"
     course = Course.objects.get(id=course_id)
     group = Group.objects.get(id=group_id)
+    grades = Grades.objects.filter(course=course_id).order_by('user__last_name')
+    users = User.objects.all()
     context = {
+        'grades' : grades,
         'course': course,
         'group': group,
+        'course_id': course_id,
+        'group_id': group_id, 
+        'users': users,
     }
     return render(request, template, context)
+
+
+def teacher_editing(request, course_id, group_id, user_id):
+    template = "report/teacher_editing.html"
+    course = Course.objects.get(id=course_id)
+    group = Group.objects.get(id=group_id)
+    grades = Grades.objects.filter(course=course_id).order_by('user__last_name')
+    users = User.objects.all()
+    editing_user = User.objects.get(id=user_id)
+    get_info_grades_user = Grades.objects.filter(course=course_id).get(user_id=editing_user)
+    form = GradesForm(instance=get_info_grades_user)
+    if request.method == 'POST':
+        form = GradesForm(request.POST, instance=get_info_grades_user)
+        if form.is_valid():
+            form.save()
+            return redirect(f'/teaches_course_table/{course_id}/{group_id}/') 
+    context = {
+        'form': form,
+        'course': course,
+        'group': group,
+        'users': users,
+        'course_id': course_id,
+        'group_id': group_id,
+        'user_id': user_id,
+        'grades' : grades,
+    }
+    return render(request, template, context)
+
+
 
 # def user_course_table(request, course_id):
 #     template = "report/user_course_table.html"
