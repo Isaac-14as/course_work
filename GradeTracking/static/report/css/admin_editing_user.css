@@ -1,0 +1,58 @@
+.title_h {
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center 
+}
+
+.users_box {
+    width: 60%;
+    margin: 0 auto;
+    font-size: 20px;
+}
+.item_user_box {
+    height: 45px;
+    background-color: rgb(164, 255, 150);
+    border-radius: 5px;
+    border: 2px solid black;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.username {
+    width: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-right: 2px solid black;
+}
+.name_user {
+    padding-left: 30px;
+    width: 500px;
+    display: flex;
+    border-right: 2px solid black;
+}
+
+.last_name {
+    padding-right: 5px;
+}
+
+.role {
+    padding-left: 30px;
+    width: 300px;
+}
+
+.users_box a {
+    text-decoration: none;
+    color: black;
+}
+
+/* .form_del {
+    display: flex;
+} */
+/* .btn {
+    width: 200px;
+    height: 45px;
+    margin-left: 10px;
+} */

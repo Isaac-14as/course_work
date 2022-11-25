@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/admin_create_user.css' %}">  
+{% endblock %}
+
+
+{% block index_content %}
+
+  <div class="courses_box">
+    <a class="box_item" href="{% url 'admin_create_student' %}">
+      Создать студента
+    </a>
+    <a class="box_item" href="{% url 'admin_create_teacher' %}">
+      Создать преподавателя
+    </a>
+    <a class="box_item" href="{% url 'admin_create_admin' %}">
+      Создать администратора
+    </a>
+  </div>
+
+{% endblock %}

@@ -67,9 +67,8 @@ class User(AbstractUser):
     ) 
     id = models.AutoField(primary_key=True)
     role = models.CharField(max_length=30, verbose_name='Роль', choices=ROLE_LIST, default='Студент')
-    # group =  models.CharField(max_length=30, verbose_name='Группа')
     group = models.ForeignKey('Group', blank=True, null=True, on_delete=models.SET_NULL)
-    teaches_courses = models.ManyToManyField(Course, blank=True, null=True)
+    teaches_courses = models.ManyToManyField(Course, blank=True, related_name='coursess')
 
     class Meta:
         verbose_name = "Пользователь"

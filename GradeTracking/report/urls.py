@@ -1,4 +1,3 @@
-# from django.contrib import admin
 from django.urls import path
 
 from .views import *
@@ -15,9 +14,11 @@ urlpatterns = [
     path('teaches_courses_groups/<int:course_id>/', teaches_courses_groups, name='teaches_courses_groups'),
     path('teaches_course_table/<int:course_id>/<int:group_id>/', teaches_course_table, name='teaches_course_table'),
     path('teacher_editing/<int:course_id>/<int:group_id>/<int:user_id>/', teacher_editing, name='teacher_editing'),
-    
-    # path('', HomeNews.as_view(), name='home'),
-    # path('category/<int:category_id>/', get_category, name='category'),
-    # path('news/<int:news_id>/', view_news, name='view_news'),
-    # path('news/add-news/', add_news, name='add_news')
+    path('admin_create_user/', admin_create_user, name='admin_create_user'),
+    path('admin_create_student/', admin_create_student, name='admin_create_student'),
+    path('admin_create_teacher/', admin_create_teacher, name='admin_create_teacher'),
+    path('admin_create_admin/', admin_create_admin, name='admin_create_admin'),
+    path('admin_editing_user/', admin_editing_user, name='admin_editing_user'),
+    path('admin_editing_forms/<int:user_id>/', admin_editing_forms, name='admin_editing_forms'),
+    path('delete_user/<int:user_id>/', delete_user, name='delete_user'),
 ]

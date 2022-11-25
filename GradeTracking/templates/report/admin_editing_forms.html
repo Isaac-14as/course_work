@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/register.css' %}">  
+{% endblock %}
+
+{% block box_entry %}
+
+<div class='box_form'>
+  <h1>Редактирование учетной записи пользователя</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+
+    {% comment %} <div class="form">
+      <label for="{{ form.role.id_for_label }}">Роль: </label>
+      {{ form.role }}
+      {{ form.role.help_text}}
+      <div class="invalid_feedback">
+        {{ form.title.errors }}
+      </div>
+    </div> {% endcomment %}
+
+    <div class="form">
+      <label for="{{ form.username.id_for_label }}">Логин: </label>
+      {{ form.username }}
+      {{ form.username.help_text}}
+      <div class="invalid_feedback">
+        {{ form.username.errors }}
+      </div>
+    </div>
+
+
+    <div class="form">
+      <label for="{{ form.first_name.id_for_label }}">Имя: </label>
+      {{ form.first_name }}
+      {{ form.first_name.help_text}}
+      <div class="invalid_feedback">
+        {{ form.first_name.errors }}
+      </div>
+    </div>
+
+    <div class="form">
+      <label for="{{ form.last_name.id_for_label }}">Фамилия: </label>
+      {{ form.last_name }}
+      {{ form.last_name.help_text}}
+      <div class="invalid_feedback">
+        {{ form.last_name.errors }}
+      </div>
+    </div>
+
+    
+    <div class="form">
+      <label for="{{ form.email.id_for_label }}">E-mail: </label>
+      {{ form.email }}
+      {{ form.email.help_text}}
+      <div class="invalid_feedback">
+        {{ form.email.errors }}
+      </div>
+    </div>
+
+    {% if get_info_user.role == "Студент" %}
+      <div class="form">
+        <label for="{{ form.group.id_for_label }}">Группа: </label>
+        {{ form.group }}
+        {{ form.group.help_text}}
+        <div class="invalid_feedback">
+          {{ form.group.errors }}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if get_info_user.role == "Преподаватель" %}
+    <div class="form">
+      <label for="{{ form.teaches_courses.id_for_label }}">Преподаваемые курсы: </label>
+      {{ form.teaches_courses }}
+      {{ form.teaches_courses.help_text}}
+      <div class="invalid_feedback">
+        {{ form.teaches_courses.errors }}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="btn_box">
+      <button type="submit" class="btn btn-dark w-50">Сохранить изменения</button>
+    </div>
+    <a href="{% url 'delete_user' get_info_user.id %}" name="button" class="btn btn btn-danger">Удалить пользователя</a> 
+  </form>
+</div>
+
+
+
+{% endblock %}

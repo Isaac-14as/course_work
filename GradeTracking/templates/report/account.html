@@ -12,7 +12,9 @@
   <div class="box_title"><b>Ваш профиль</b></div>
   <div class="first_name"><b>Имя:</b> {{ user.first_name }}</div>
   <div class="last_name"><b>Фамилия:</b> {{ user.last_name }}</div>
-  <div class="group"><b>Группа:</b> {{ user.group }}</div>
+  {% if user.role == 'Студент' %}
+    <div class="group"><b>Группа:</b> {{ user.group }}</div>
+  {% endif %}
   <div class="email"><b>E-mail:</b> {{ user.email }}</div>
   <div class="role"><b>Роль:</b> {{ user.role }}</div>
 </div>

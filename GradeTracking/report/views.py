@@ -1,15 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django.contrib import messages
-from .forms import UserRegisterForm, UserLoginForm
+from .forms import CustomUserChangeForm, StudentRegisterForm, TeacherRegisterForm, AdminRegisterForm
 from django.contrib.auth import login, logout, authenticate
 from .models import Course, User, Grades, Group
-from .forms import GradesForm
-
-# from .models import News, Category
-# from .forms import NewsForm
+from .forms import GradesForm, UserLoginForm
 
 
 def index(request):
@@ -19,7 +16,7 @@ def index(request):
 def register(request):
     template = "report/register.html"
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = StudentRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
@@ -28,7 +25,7 @@ def register(request):
         else:
             messages.error(request, 'Ошибка регистрации')
     else:
-        form = UserRegisterForm()
+        form = StudentRegisterForm()
     context = {
         'form': form,
     }
@@ -62,30 +59,8 @@ def account(request):
 
 def user_courses(request):
     template = "report/user_courses.html"
-    # user = (request.user).courses
-    # courses = Course.objects.all()
-    # courses = (request.user).courses
-    # courses = Course.objects.filter(user_id)
-    # context = {
-    #     'courses': courses,
-    # }
-
     return render(request, template)
 
-# def user_course_table(request, course_id):
-#     template = "report/user_course_table.html"
-#     grades = Grades.objects.filter(course=course_id)
-#     course1 = Course.objects.get(id=course_id)
-#     groups = Group.objects.all()
-#     users = User.objects.filter(group=request.user.group).order_by('last_name')
-#     context = {
-#         'course_id': course_id,
-#         'users': users,
-#         'groups': groups,
-#         'grades' : grades,
-#         'course1': course1,
-#     }
-#     return render(request, template, context)
 
 def user_course_table(request, course_id):
     template = "report/user_course_table.html"
@@ -139,7 +114,7 @@ def teacher_editing(request, course_id, group_id, user_id):
     users = User.objects.all()
     editing_user = User.objects.get(id=user_id)
     get_info_grades_user = Grades.objects.filter(course=course_id).get(user_id=editing_user)
-    form = GradesForm(instance=get_info_grades_user)
+    # form = GradesForm(instance=get_info_grades_user)
     if request.method == 'POST':
         form = GradesForm(request.POST, instance=get_info_grades_user)
         if form.is_valid():
@@ -158,56 +133,111 @@ def teacher_editing(request, course_id, group_id, user_id):
     return render(request, template, context)
 
 
-
-# def user_course_table(request, course_id):
-#     template = "report/user_course_table.html"
-#     course = Course.objects.get(id=course_id)
-#     users_group = User.objects.filter(group=request.user.group).order_by('last_name')
-#     # grades_user = Grades.objects.filter()
-#     context = {
-#         'users_group': users_group,
-#         'course': course,
-#         'course_id': course_id,
-#     }
-#     return render(request, template, context)
+def admin_create_user(request):
+    template = "report/admin_create_user.html"
+    return render(request, template)
 
 
-# def get_category(request, category_id):
-#     template = 'news/category.html'
-#     news = News.objects.filter(category_id=category_id)
-#     categories = Category.objects.all()
-#     category = Category.objects.get(pk=category_id)
-#     context = {
-#         'news': news, 
-#         'categories': categories,
-#         'category': category
-#     }
-#     return render(request, template, context)
+
+def admin_create_student(request):
+    template = "report/admin_create_student.html"
+    if request.method == 'POST':
+        form_student = StudentRegisterForm(request.POST)
+        if form_student.is_valid():
+            user = form_student.save()
+            user.save()
+    else:
+        form_student = StudentRegisterForm()
+    context = {
+        'form_student': form_student,
+    }
+    return render(request, template, context)
 
 
-# def view_news(request, news_id):
-#         template = 'news/view_news.html'
-#         news = News.objects.get(pk=news_id)
-#         context = {
-#             'news': news
-#         }
-#         return render(request, template, context)
+def admin_create_teacher(request):
+    template = "report/admin_create_teacher.html"
+    if request.method == 'POST':
+        form_teacher = TeacherRegisterForm(request.POST)
+        if form_teacher.is_valid():
+            user = form_teacher.save()
+            user.teaches_courses.set(request.POST.getlist('teaches_courses'))
+    else:
+        form_teacher = TeacherRegisterForm()
+    context = {
+        'form_teacher': form_teacher,
+    }
+    return render(request, template, context)
 
-# def add_news(request):
-#     template = 'news/add_news.html'
-#     categories = Category.objects.all()
+
+
+def admin_create_admin(request):
+    template = "report/admin_create_admin.html"
+    if request.method == 'POST':
+        form_admin = AdminRegisterForm(request.POST)
+        if form_admin.is_valid():
+            form_admin.save()
+    else:
+        form_admin = AdminRegisterForm()
+    context = {
+        'form_admin': form_admin,
+    }
+    return render(request, template, context)
+
+
+
+def admin_editing_user(request):
+    template = "report/admin_editing_user.html"
+    users = User.objects.all().order_by('last_name')
+    context = {
+        'users': users,
+    }
+    return render(request, template, context)
+
+
+# def admin_editing_forms(request, user_id):
+#     template = "report/admin_editing_forms.html"
+#     get_info_user = User.objects.get(id=user_id)
 #     if request.method == 'POST':
-#         form = NewsForm(request.POST)
+#         form = UserRegisterForm(request.POST, instance=get_info_user)
 #         if form.is_valid():
-#             # print(form.cleaned_data)
-#             news = form.save()
-#             return redirect(news) 
-#             # удивительный redirect
+#             form.save()
 #     else:
-#         form = NewsForm()
-
+#         form= UserRegisterForm()
 #     context = {
 #         'form': form,
-#         'categories': categories
+#         'get_info_user': get_info_user,
 #     }
 #     return render(request, template, context)
+
+
+def admin_editing_forms(request, user_id):
+    template = "report/admin_editing_forms.html"
+    get_info_user = User.objects.get(id=user_id)
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = CustomUserChangeForm(request.POST, instance=get_info_user)
+            if form.is_valid():
+                form.save()
+                return redirect(admin_editing_user)
+        else:
+            form = CustomUserChangeForm(instance=get_info_user)
+
+    context = {
+        'form': form,
+        'get_info_user': get_info_user,
+    }
+
+    return render(request, template, context)
+
+
+def delete_user(request, user_id):
+    template = "report/delete_user.html"
+    user_del = User.objects.get(id=user_id)
+    context = {
+        "user_del": user_del,
+    }
+    if request.method == 'POST':
+        user_del.delete()
+        return redirect(admin_editing_user)
+    return render(request, template, context)
+

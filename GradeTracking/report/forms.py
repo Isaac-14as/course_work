@@ -1,28 +1,73 @@
 from django import forms
 
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import User, Group, Grades
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from .models import User, Group, Grades, Course
 
 
-class UserRegisterForm(UserCreationForm):
+class CustomUserChangeForm(UserChangeForm):
     ROLE_LIST = (
-        ('S', 'Студент'),
-        ('T', 'Преподаватель'),
-        ('A', 'Администратор'),
+        ('Студент', 'Студент'),
+        ('Преподаватель', 'Преподаватель'),
+        ('Администратор', 'Администратор'),
+    )
+    username = forms.CharField(label='Логин', help_text='Логин пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label='Имя', help_text='Имя пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label='Фамилия', help_text='Фамилия пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label='E-mail',  widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    group = forms.ModelChoiceField(queryset=Group.objects.all(), required=False, label='Группа')
+    teaches_courses = forms.ModelMultipleChoiceField(queryset=Course.objects.all(), required=False, label='Преподаваемые курсы', widget=forms.CheckboxSelectMultiple(attrs={'style': 'list-style: none; margin: 0;'}))
+    password = None
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'group', 'teaches_courses')
+
+
+class StudentRegisterForm(UserCreationForm):
+    username = forms.CharField(label='Логин', help_text='Логин пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label='Имя', help_text='Имя пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label='Фамилия', help_text='Фамилия пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    group = forms.ModelChoiceField(queryset=Group.objects.all(), label='Группа')
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'group', 'password1', 'password2')
+
+class TeacherRegisterForm(UserCreationForm):
+    ROLE_LIST = (
+        ('Преподаватель', 'Преподаватель'),
     ) 
     username = forms.CharField(label='Логин', help_text='Логин пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
     first_name = forms.CharField(label='Имя', help_text='Имя пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(label='Фамилия', help_text='Фамилия пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    # group = forms.ModelMultipleChoiceField(label='Группа', queryset=Group.objects.all())
-    group = Group()
-    
     email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    role = forms.ChoiceField(label='Роль', choices=ROLE_LIST)
+    teaches_courses = forms.ModelMultipleChoiceField(queryset=Course.objects.all(), label='Преподаваемые курсы', widget=forms.CheckboxSelectMultiple(attrs={'style': 'list-style: none; margin: 0;'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-    # role = forms.ChoiceField(label='Роль', choices=ROLE_LIST) 
+
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'group', 'password1', 'password2')
+        fields = ('username', 'first_name', 'last_name', 'email', 'role', 'teaches_courses', 'password1', 'password2')
+
+class AdminRegisterForm(UserCreationForm):
+    ROLE_LIST = (
+        ('Администратор', 'Администратор'),
+    ) 
+    username = forms.CharField(label='Логин', help_text='Логин пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label='Имя', help_text='Имя пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label='Фамилия', help_text='Фамилия пользователя должно состоять максимум из 50 символов', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label='E-mail', widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    role = forms.ChoiceField(label='Роль', choices=ROLE_LIST)
+    password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Подтверждение пароля', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'role', 'password1', 'password2')
+
 
 
 class UserLoginForm(AuthenticationForm):
@@ -30,9 +75,8 @@ class UserLoginForm(AuthenticationForm):
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 
-
 class GradesForm(forms.ModelForm):
-
+    
     class Meta:
         model = Grades
         fields = []

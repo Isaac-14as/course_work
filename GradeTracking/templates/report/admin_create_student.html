@@ -9,15 +9,14 @@
 {% block box_entry %}
 
 <div class='box_form'>
-  <h1>Регистрация</h1>
+  <h1>Регистрация нового студента</h1>
   <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form_student.as_p }}
     <div class="btn_box">
-      <button type="submit" class="btn btn-dark w-50">Зарегистрироваться</button>
+      <button type="submit" class="btn btn-dark w-50">Зарегистрировать</button>
     </div>
   </form>
-  <a class="login_link" href="{% url 'login' %}">Уже есть аккаунт</a>
 </div>
 
 {% endblock %}

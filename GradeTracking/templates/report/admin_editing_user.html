@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/admin_editing_user.css' %}">  
+{% endblock %}
+
+
+{% block index_content %}
+<div class="title_h">
+  <h2>Список пользователей</h2>
+</div>
+  <div class="users_box">
+    {% for item_user in users %}
+      {% if item_user.username != 'admin' %}
+      {% comment %} <form class="form_del" action="" method="post"> {% endcomment %}
+        {% comment %} <div class="form_del"> {% endcomment %}
+        <a class="item_user_box" href="{% url 'admin_editing_forms' item_user.id %}">
+          <div class="username">{{ item_user }}</div>
+          <div class="name_user">
+            <div class="last_name">{{ item_user.last_name }}</div>
+            <div class="first_name">{{ item_user.first_name }}</div>
+          </div>
+          <div class="role">{{ item_user.role }}</div>
+        </a>
+        {% comment %} <button type="submit" name="button" class="btn btn btn-danger">Удалить пользователя</button>{% endcomment %}
+        {% comment %} </div> {% endcomment %}
+      {% comment %} </form> {% endcomment %}
+
+      {% endif %}
+    {% endfor %}
+  </div>
+
+{% endblock %}

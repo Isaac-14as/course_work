@@ -26,7 +26,12 @@
   {% if user.role == 'Преподаватель' %}
   <div class="bottom_header">
     <a href="{% url 'teacher_courses' %}">Преподаваемые курсы</a>
-
+  </div>
+  {% endif %}
+  {% if user.role == 'Администратор' %}
+  <div class="bottom_header">
+    <a href="{% url 'admin_create_user' %}">Создать пользователя</a>
+    <a href="{% url 'admin_editing_user' %}">Редактировать пользователей</a>
   </div>
   {% endif %}
 </div>
