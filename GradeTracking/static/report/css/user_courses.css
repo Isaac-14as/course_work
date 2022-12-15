@@ -3,11 +3,9 @@
     display: flex;
     margin: 0 auto;
     margin-top: 40px;
-    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    
-}
+}   
 
 .course_item {
     background-color: rgb(164, 255, 150);
@@ -20,6 +18,8 @@
     justify-content: center;
     font-size: 30px;
     margin-top: 40px;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .courses_box a {
@@ -28,7 +28,7 @@
 }
 .course_title {
     padding-top: 20px;
-    width: 500px;
+    width: 70%;
     margin: 0 auto;
     text-align: center;
 }

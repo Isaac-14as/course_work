@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/register.css' %}">  
+{% endblock %}
+
+{% block box_entry %}
+
+<div class='box_form'>
+  <h1>Регистрация новой группы</h1>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="btn_box">
+      <button type="submit" class="btn btn-dark w-50">Зарегистрировать</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

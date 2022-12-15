@@ -1,10 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import ListView
-
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import CustomUserChangeForm, StudentRegisterForm, TeacherRegisterForm, AdminRegisterForm
-from django.contrib.auth import login, logout, authenticate
+from .forms import *
+from django.contrib.auth import login, logout
 from .models import Course, User, Grades, Group
 from .forms import GradesForm, UserLoginForm
 
@@ -12,24 +9,6 @@ from .forms import GradesForm, UserLoginForm
 def index(request):
     template = "report/index.html"
     return render(request, template)
-
-def register(request):
-    template = "report/register.html"
-    if request.method == 'POST':
-        form = StudentRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            messages.success(request, 'Вы успешно зарегистрировались')
-            return redirect("index")
-        else:
-            messages.error(request, 'Ошибка регистрации')
-    else:
-        form = StudentRegisterForm()
-    context = {
-        'form': form,
-    }
-    return render(request, template, context)
 
 def user_login(request):
     template = "report/login.html"
@@ -46,31 +25,55 @@ def user_login(request):
     }
     return render(request, template, context)
 
-
 def user_logout(request):
     logout(request)
     return redirect('login')
-
 
 def account(request):
     template = "report/account.html"
     return render(request, template)
 
-
-def user_courses(request):
-    template = "report/user_courses.html"
-    return render(request, template)
-
-
 def user_course_table(request, course_id):
     template = "report/user_course_table.html"
-    grades = Grades.objects.filter(course=course_id).order_by('user__last_name')
+    user_1 = request.user
+    grades_1 = Grades.objects.filter(course=course_id).order_by('user__last_name')
+    grades = []
+    for i in range(len(grades_1)):
+        user_2 = User.objects.get(username=str(grades_1[i].user))
+        if user_2.group == user_1.group:
+            grades.append(grades_1[i])
+
     course = Course.objects.get(id=course_id)
     context = {
         'grades' : grades,
         'course': course,
     }
     return render(request, template, context)
+
+def user_courses(request):
+    template = "report/user_courses.html"
+    return render(request, template)
+
+def register(request):
+    template = "report/register.html"
+    if request.method == 'POST':
+        form = StudentRegisterForm(request.POST)
+        if form.is_valid():
+            user_1 = form.save()
+            login(request, user_1)
+            messages.success(request, 'Вы успешно зарегистрировались')
+            for i in user_1.group.courses.all():
+                Grades.objects.create(visit_1=False, visit_2=False,visit_3=False,visit_4=False,visit_5=False,visit_6=False,visit_7=False,visit_8=False,visit_9=False,visit_10=False,visit_11=False,visit_12=False,visit_13=False,visit_14=False,visit_15=False,visit_16=False, grade_1=None,grade_2=None,grade_3=None,grade_4=None,grade_5=None,grade_6=None,grade_7=None,grade_8=None,grade_9=None,grade_10=None,grade_11=None,grade_12=None,grade_13=None,grade_14=None,grade_15=None,grade_16=None, course=i, user=user_1)
+            return redirect("index")
+        else:
+            messages.error(request, 'Ошибка регистрации')
+    else:
+        form = StudentRegisterForm()
+    context = {
+        'form': form,
+    }
+    return render(request, template, context)
+
 
 
 def teacher_courses(request):
@@ -120,6 +123,8 @@ def teacher_editing(request, course_id, group_id, user_id):
         if form.is_valid():
             form.save()
             return redirect(f'/teaches_course_table/{course_id}/{group_id}/') 
+    else:
+        form = GradesForm(instance=get_info_grades_user)
     context = {
         'form': form,
         'course': course,
@@ -144,8 +149,10 @@ def admin_create_student(request):
     if request.method == 'POST':
         form_student = StudentRegisterForm(request.POST)
         if form_student.is_valid():
-            user = form_student.save()
-            user.save()
+            user_1 = form_student.save()
+            user_1.save()
+            for i in user_1.group.courses.all():
+                Grades.objects.create(visit_1=False, visit_2=False,visit_3=False,visit_4=False,visit_5=False,visit_6=False,visit_7=False,visit_8=False,visit_9=False,visit_10=False,visit_11=False,visit_12=False,visit_13=False,visit_14=False,visit_15=False,visit_16=False, grade_1=None,grade_2=None,grade_3=None,grade_4=None,grade_5=None,grade_6=None,grade_7=None,grade_8=None,grade_9=None,grade_10=None,grade_11=None,grade_12=None,grade_13=None,grade_14=None,grade_15=None,grade_16=None, course=i, user=user_1)
     else:
         form_student = StudentRegisterForm()
     context = {
@@ -194,20 +201,6 @@ def admin_editing_user(request):
     return render(request, template, context)
 
 
-# def admin_editing_forms(request, user_id):
-#     template = "report/admin_editing_forms.html"
-#     get_info_user = User.objects.get(id=user_id)
-#     if request.method == 'POST':
-#         form = UserRegisterForm(request.POST, instance=get_info_user)
-#         if form.is_valid():
-#             form.save()
-#     else:
-#         form= UserRegisterForm()
-#     context = {
-#         'form': form,
-#         'get_info_user': get_info_user,
-#     }
-#     return render(request, template, context)
 
 
 def admin_editing_forms(request, user_id):
@@ -241,3 +234,107 @@ def delete_user(request, user_id):
         return redirect(admin_editing_user)
     return render(request, template, context)
 
+
+def admin_create_group(request):
+    template = "report/admin_create_group.html"
+    if request.method == 'POST':
+        form = GroupRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = GroupRegisterForm()
+    context = {
+        'form': form,
+    }
+    return render(request, template, context)
+
+
+def admin_group_list(request):
+    template = "report/admin_group_list.html"
+    groups = Group.objects.all()
+    context = {
+        'groups': groups,
+    }
+    return render(request, template, context)
+
+def admin_group_editing(request, group_id):
+    template = "report/admin_group_editing.html"
+    group = Group.objects.get(id=group_id)
+    if request.method == 'POST':
+        form = GroupRegisterForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return redirect(admin_group_list)
+    else:
+        form = GroupRegisterForm(instance=group)
+    context = {
+        'form': form,
+        'group': group,
+    }
+    return render(request, template, context)
+
+def admin_delete_group(request, group_id):
+    template = "report/admin_delete_group.html"
+    group = Group.objects.get(id=group_id)
+    context = {
+        "group": group,
+    }
+    if request.method == 'POST':
+        group.delete()
+        return redirect(admin_group_list)
+    return render(request, template, context)
+
+
+
+
+
+
+
+def admin_create_course(request):
+    template = "report/admin_create_course.html"
+    if request.method == 'POST':
+        form = CourseRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = CourseRegisterForm()
+    context = {
+        'form': form,
+    }
+    return render(request, template, context)
+
+
+def admin_course_list(request):
+    template = "report/admin_course_list.html"
+    courses = Course.objects.all()
+    context = {
+        'courses': courses,
+    }
+    return render(request, template, context)
+
+def admin_course_editing(request, course_id):
+    template = "report/admin_course_editing.html"
+    course = Course.objects.get(id=course_id)
+    if request.method == 'POST':
+        form = CourseRegisterForm(request.POST, instance=course)
+        if form.is_valid():
+            form.save()
+            return redirect(admin_course_list)
+    else:
+        form = CourseRegisterForm(instance=course)
+    context = {
+        'form': form,
+        'course': course,
+    }
+    return render(request, template, context)
+
+def admin_delete_course(request, course_id):
+    template = "report/admin_delete_course.html"
+    course = Course.objects.get(id=course_id)
+    context = {
+        "course": course,
+    }
+    if request.method == 'POST':
+        course.delete()
+        return redirect(admin_course_list)
+    return render(request, template, context)

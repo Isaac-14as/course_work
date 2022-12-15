@@ -126,3 +126,19 @@ class GradesForm(forms.ModelForm):
         grade_14 = forms.IntegerField()
         grade_15 = forms.IntegerField()
         grade_16 = forms.IntegerField()
+
+
+class GroupRegisterForm(forms.ModelForm):
+        name = forms.CharField(label='Название группы', widget=forms.TextInput(attrs={'class': 'form-control'}))
+        courses = forms.ModelMultipleChoiceField(queryset=Course.objects.all(), label='Курсы', widget=forms.CheckboxSelectMultiple(attrs={'style': 'list-style: none; margin: 0;'}))
+    
+        class Meta:
+            model = Group
+            fields = ('name', 'courses')
+
+class CourseRegisterForm(forms.ModelForm):
+        name = forms.CharField(label='Название курса', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    
+        class Meta:
+            model = Course
+            fields = ('name',)

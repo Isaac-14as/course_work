@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block links %}
+  {% load static %} 
+  <link rel="stylesheet" href="{% static 'report/css/admin_group_list.css' %}">  
+{% endblock %}
+
+
+{% block index_content %}
+<div class="title_h">
+  <h2>Список групп</h2>
+</div>
+  <div class="users_box">
+    {% for group in groups %}
+        <a class="item_user_box" href="{% url 'admin_group_editing' group.id %}">
+          <div class="username">{{ group.name }}</div>
+          <div class="courses_box">
+            {% for course in group.courses.all %}
+              <div class="course_item">{{ course }}</div>
+            {% endfor %}  
+          </div>
+        </a>
+    {% endfor %}
+  </div>
+
+{% endblock %}

@@ -2,16 +2,19 @@
 
 {% block links %}
   {% load static %} 
-  <link rel="stylesheet" href="{% static 'report/css/user_courses.css' %}">  
+  <link rel="stylesheet" href="{% static 'report/css/admin_group_list.css' %}">  
 {% endblock %}
 
 
 {% block index_content %}
-  <div class="courses_box">
+<div class="title_h">
+  <h2>Список курсов</h2>
+</div>
+  <div class="users_box">
     {% for item in user.group.courses.all %}
-      <a class="course_item" href="{% url 'user_course_table' item.id  %}">
-        {{ item }}
-      </a>
+        <a class="item_user_box" href="{% url 'user_course_table' item.id  %}">
+          <div class="coursename">{{ item }}</div>
+        </a>
     {% endfor %}
   </div>
 

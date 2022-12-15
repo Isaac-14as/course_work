@@ -11,9 +11,9 @@
   <h2>Список курсов</h2>
 </div>
   <div class="users_box">
-    {% for item in user.teaches_courses.all %}
-        <a class="item_user_box" href="{% url 'teaches_courses_groups' item.id %}">
-          <div class="coursename">{{ item }}</div>
+    {% for course in courses %}
+        <a class="item_user_box" href="{% url 'admin_course_editing' course.id %}">
+          <div class="coursename">{{ course.name }}</div>
         </a>
     {% endfor %}
   </div>
